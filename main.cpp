@@ -20,53 +20,8 @@ void setFileReadWritePermissions(const string& fileName) {
     chmod(fileName.c_str(), S_IRUSR | S_IWUSR);
 }
 
-// Функция записи пользователей в файл с установкой прав доступа
-void writeUsersToFile(const std::string& fileName, const std::vector<std::string>& userData) {
-    std::ofstream file(fileName);
-    if (!file.is_open()) {
-        std::cerr << "Ошибка открытия файла для записи: " << fileName << std::endl;
-        return;
-    }
-    
-    for (const std::string& user : userData) {
-        file << user << std::endl;
-    }
-    
-    file.close();
-    
-    // Установка прав доступа к файлу для чтения
-    chmod(fileName.c_str(), S_IRUSR | S_IWUSR);
-}
 
-// Функция записи сообщений в файл с установкой прав доступа
-void writeMessagesToFile(const std::string& fileName, const std::vector<std::string>& messageData) {
-    std::ofstream file(fileName);
-    if (!file.is_open()) {
-        std::cerr << "Ошибка открытия файла для записи: " << fileName << std::endl;
-        return;
-    }
-    
-    for (const std::string& message : messageData) {
-        file << message << std::endl;
-    }
-    
-    file.close();
-    
-    // Установка прав доступа к файлу для чтения
-    chmod(fileName.c_str(), S_IRUSR | S_IWUSR);
-}
 
-int main() {
-    // Пример данных пользователей и сообщений
-    std::vector<std::string> userData = {"Иван;ivan;123456", "Мария;maria;abcdef", "Петр;petr;qwerty"};
-    std::vector<std::string> messageData = {"Привет!;ivan;maria", "Как дела?;maria;petr", "Все хорошо!;maria;ivan"};
-
-    // Запись пользователей и сообщений в файлы
-    writeUsersToFile("users.txt", userData);
-    writeMessagesToFile("messages.txt", messageData);
-
-    return 0;
-}
 
 // Функция для чтения пользователей из файла
 vector<User> readUsersFromFile(const string& fileName) {
@@ -106,6 +61,45 @@ vector<Message> readMessagesFromFile(const string& fileName)
     }
     return messages;
 } 
+
+
+// Функция записи пользователей в файл с установкой прав доступа
+void writeUsersToFile(const std::string& fileName, const std::vector<std::string>& userData) {
+    std::ofstream file(fileName);
+    if (!file.is_open()) {
+        std::cerr << "Ошибка открытия файла для записи: " << fileName << std::endl;
+        return;
+    }
+    
+    for (const std::string& user : userData) {
+        file << user << std::endl;
+    }
+    
+    file.close();
+    
+    // Установка прав доступа к файлу для чтения
+    chmod(fileName.c_str(), S_IRUSR | S_IWUSR);
+}
+
+// Функция записи сообщений в файл с установкой прав доступа
+void writeMessagesToFile(const std::string& fileName, const std::vector<std::string>& messageData) {
+    std::ofstream file(fileName);
+    if (!file.is_open()) {
+        std::cerr << "Ошибка открытия файла для записи: " << fileName << std::endl;
+        return;
+    }
+    
+    for (const std::string& message : messageData) {
+        file << message << std::endl;
+    }
+    
+    file.close();
+    
+    // Установка прав доступа к файлу для чтения
+    chmod(fileName.c_str(), S_IRUSR | S_IWUSR);
+}
+
+
 // Функция для вывода сообщений для заданного пользователя
 void printMessagesForUser(const string& login, const vector<Message>& messages)
 {
@@ -123,33 +117,32 @@ void printMessagesForUser(const string& login, const vector<Message>& messages)
 int main()
 {
     // Создаем файл для пользователей
-    ofstream usersFile("users.txt");
-    if(!usersFile)
-    {
-        cerr << "Не удалось создать файл для пользователей" << endl;
-        return 1;
-    }
-    // Записываем тестовые данные пользователей в файл
-    usersFile << "Иван;ivan;123456" << endl;
-    usersFile << "Мария;maria;abcdef" << endl;
-    usersFile << "Петр;petr;qwerty" << endl;
+    // ofstream usersFile("users.txt");
+    // if(!usersFile)
+    // {
+    //     cerr << "Не удалось создать файл для пользователей" << endl;
+    //     return 1;
+    // }
+    
 
-    //закрываем файл
-    usersFile.close();
+
+    // Данные пользователей и сообщений
+    std::vector<std::string> userData = {"Иван;ivan;123456", "Мария;maria;abcdef", "Петр;petr;qwerty"};
+    std::vector<std::string> messageData = {"Привет!;ivan;maria", "Как дела?;maria;petr", "Все хорошо!;maria;ivan"};
+
+    // Запись пользователей и сообщений в файлы
+    writeUsersToFile("users.txt", userData);
+    writeMessagesToFile("messages.txt", messageData);
+
 
     // Создаем файл для сообщений
-    ofstream messagesFile("messages.txt");
-    if (!messagesFile) {
-        cerr << "Не удалось создать файл для сообщений!" << endl;
-        return 1; // Возвращаем ошибку
-    }
-    // Записываем тестовые данные сообщений в файл
-    messagesFile << "Привет!;ivan;maria" << std::endl;
-    messagesFile << "Как дела?;maria;petr" << std::endl;
-    messagesFile << "Все хорошо!;maria;ivan" << std::endl;
+    // ofstream messagesFile("messages.txt");
+    // if (!messagesFile) {
+    //     cerr << "Не удалось создать файл для сообщений!" << endl;
+    //     return 1; // Возвращаем ошибку
+    // }
+    
 
-    // Закрываем файл для сообщений
-    messagesFile.close();
 
 
     // Считываем пользователей и сообщения из файлов
@@ -159,6 +152,6 @@ int main()
     printMessagesForUser("ivan", messages);
 
 
-
+    
     return 0;
 }

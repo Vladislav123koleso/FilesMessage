@@ -1,0 +1,3 @@
+Привет!;ivan;maria
+Как дела?;maria;petr
+Все хорошо!;maria;ivan

@@ -1,0 +1,3 @@
+Иван;ivan;123456
+Мария;maria;abcdef
+Петр;petr;qwerty
